@@ -12,10 +12,12 @@
 
 #include "../includes/malloc.h"
 
+t_fmemblocks		*g_firstmemblocks = NULL;
+
 void			*malloc(size_t size)
 {
 	if (g_firstmemblocks == NULL)
-		mapFirstMemblocks();
+		mapFirstMemBlocks();
 	size_t i = size;
 	i = 3;
 	return ((void *)i);

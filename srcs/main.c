@@ -21,6 +21,7 @@ int main(int argc, char **argv)
 	i = argc;
 	j = argv;
 
+	malloc(100);
 	printf("pagesize %d \n", getpagesize());
 	printf("limit %d \n", getrlimit(RLIMIT_DATA, &r1));
 	return (0);

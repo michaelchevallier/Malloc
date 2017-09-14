@@ -17,13 +17,15 @@ t_fmemblocks		*mapFirstMemBlocks()
 	t_fmemblocks		*fmemblocks;
 
 	fmemblocks = (t_fmemblocks *)mmap(0, sizeof(t_fmemblocks),
-		PROT_READ | PROT_WRITE, MAP_ANON, MAP_PRIVATE);
-	fmemblocks->tinylist = (t_tinylist *)mmap(0, sizeof(t_tinylist),
-		PROT_READ | PROT_WRITE, MAP_ANON, MAP_PRIVATE);
-	fmemblocks->smalllist = (t_smalllist *)mmap(0, sizeof(t_smalllist),
-		PROT_READ | PROT_WRITE, MAP_ANON, MAP_PRIVATE);
-	fmemblocks->largelist = (t_largelist *)mmap(0, sizeof(t_largelist),
-		PROT_READ | PROT_WRITE, MAP_ANON, MAP_PRIVATE);
-	initTinyMem
+		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
+	fmemblocks->tinylist = (t_memblocklist *)mmap(0, sizeof(t_memblocklist),
+		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
+	fmemblocks->smalllist = (t_memblocklist *)mmap(0, sizeof(t_memblocklist),
+		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
+	fmemblocks->largelist = (t_memblocklist *)mmap(0, sizeof(t_memblocklist),
+		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
+	initMemBlockList(fmemblocks->tinylist, TINY);
+	initMemBlockList(fmemblocks->smalllist, SMALL);
+	initMemBlockList(fmemblocks->largelist, LARGE);
 	return (fmemblocks);
 }
