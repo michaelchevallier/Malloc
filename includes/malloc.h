@@ -32,26 +32,13 @@ typedef enum		e_blocktype
 					LARGE
 }					t_blocktype;
 
-/** Portions of memBlock **/
-typedef struct		s_block
-{
-	int				id;
-	int				isused;
-	void			*starting_address;
-	void			*parent_address;
-	size_t			size;
-	size_t			alloted_mem;
-}					t_block;
-
 /** type: TINY = 0 || SMALL = 1 || LARGE = 2 **/
 typedef struct		s_memblock
 {
 	size_t			size;
-	size_t			alloted_mem;
 	void			*starting_address;
-	t_block			blocks[BLOCKDIV + 1];
 	t_blocktype		type;
-	int				isfull;
+	size_t			alloted_mem[BLOCKDIV];
 }					t_memblock;
 
 typedef struct		s_memblocklist
@@ -79,5 +66,5 @@ void				initMemBlockList(t_memblocklist *list, t_blocktype type);
 void				setTiny(t_memblocklist *list);
 void				setSmall(t_memblocklist *list);
 void				setLarge(t_memblocklist *list);
-
+// t_block				initBlock(t_block block, int i, t_memblock *memblock);
 #endif

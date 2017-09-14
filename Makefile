@@ -31,8 +31,8 @@ C_FILES += realloc.c
 C_FILES += mapFirstMemBlocks.c
 C_FILES += initMemBlockList.c
 C_FILES += setTiny.c
-# C_FILES += setSmall.c
-# C_FILES += setLarge.c
+C_FILES += setSmall.c
+C_FILES += setLarge.c
 C_FILES +=
 
 O_FILES = $(addprefix $(O_DIR),$(C_FILES:.c=.o))

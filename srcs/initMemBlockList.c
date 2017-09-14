@@ -12,8 +12,6 @@
 
 #include "../includes/malloc.h"
 
-
-
 void		initMemBlockList(t_memblocklist *list, t_blocktype type)
 {
 	list->size = 0;
@@ -21,10 +19,10 @@ void		initMemBlockList(t_memblocklist *list, t_blocktype type)
 	list->next = NULL;
 	if (type == TINY)
 		setTiny(list);
-	// else if (type == SMALL)
-	// 	setSmall(list);
-	// else if (type == LARGE)
-	// 	setLarge(list);
+	else if (type == SMALL)
+		setSmall(list);
+	else if (type == LARGE)
+		setLarge(list);
 	else
 		return ;
 

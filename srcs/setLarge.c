@@ -12,20 +12,6 @@
 
 #include "../includes/malloc.h"
 
-t_block		initblock(t_block *block, int i, t_memblock *memblock)
-{
-	block = (t_block *)mmap(0, sizeof(t_block), PROT_READ | PROT_WRITE,
-		MAP_ANON | MAP_PRIVATE, -1, 0);
-	block->size = memblock->size / 100;
-	block->id = i;
-	block->isused = 0;
-	block->parent_address = memblock->starting_address;
-	block->starting_address = memblock->starting_address +
-		(i * block->size);
-	block->alloted_mem = 0;
-	return (*block);
-}
-
 void		setLarge(t_memblocklist *list)
 {
 	int			i;
@@ -34,15 +20,7 @@ void		setLarge(t_memblocklist *list)
 	list->current = (t_memblock *)mmap(0, sizeof(t_memblock),
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
 	list->size += 1;
-	list->current->size = TINYSIZE * PAGESIZE;
-	list->current->alloted_mem = 0;
-	list->current->starting_address = (void *)mmap(0, TINY * PAGESIZE,
-		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
-	list->current->type = TINY;
-	list->current->isfull = 0;
-	while (i <= BLOCKDIV)
-	{
-		list->current->blocks[i] = initblock(list->current->blocks, i, list->current);
-		i++;
-	}
+	list->current->size = 0;
+	list->current->starting_address = NULL;
+	list->current->type = LARGE;
 }
