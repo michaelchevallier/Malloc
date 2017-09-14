@@ -18,72 +18,73 @@
 # include <sys/resource.h>
 
 
-
 #include <stdio.h>
 
 
 # define BLOCKDIV 100
+# define TINYSIZE 100
+# define SMALLSIZE 1000
 
-//Portions of memBlock
-typedef struct	s_Block
+/** Portions of memBlock **/
+typedef struct	s_block
 {
 	int			id;
-	int			isUsed;
-	void		*startingAddress;
-	void		*parentAddress;
+	int			isused;
+	void		*starting_address;
+	void		*parent_address;
 	size_t		size;
-	size_t		allotedMem;
-}				t_Block;
+	size_t		alloted_mem;
+}				t_block;
 
-/* type: TINY = 0 || SMALL = 1 || LARGE = 2 */
-typedef struct	s_memBlock
+/** type: TINY = 0 || SMALL = 1 || LARGE = 2 **/
+typedef struct	s_memblock
 {
 	size_t		size;
-	size_t		allotedMem;
-	void		*startingAddress;
+	size_t		alloted_mem;
+	void		*starting_address;
 	t_Block		blocks[BLOCKDIV + 1];
-	int			isFull;
+	int			isfull;
 	int			type;
-}				t_memBlock;
+}				t_memblock;
 
-typedef struct	s_tinyList
+typedef struct	s_tinylist
 {
 	size_t		size;
-	t_memBlock	*current;
-	t_memBlock	*next;
-	t_memBlock	*prev;
-	t_memBlock	*start;
-	t_memBlock	*end;
-}				t_tinyList;
+	t_memblock	*current;
+	t_memblock	*next;
+	t_memblock	*prev;
+	t_memblock	*start;
+	t_memblock	*end;
+}				t_tinylist;
 
-typedef struct	s_smallList
+typedef struct	s_smalllist
 {
 	size_t		size;
-	t_memBlock	*current;
-	t_memBlock	*next;
-	t_memBlock	*prev;
-	t_memBlock	*start;
-	t_memBlock	*end;
-}				t_smallList;
+	t_memblock	*current;
+	t_memblock	*next;
+	t_memblock	*prev;
+	t_memblock	*start;
+	t_memblock	*end;
+}				t_smalllist;
 
-typedef struct	s_largeList
+typedef struct	s_largelist
 {
 	size_t		size;
-	t_memBlock	*current;
-	t_memBlock	*next;
-	t_memBlock	*prev;
-	t_memBlock	*start;
-	t_memBlock	*end;
-}				t_largeList;
+	t_memblock	*current;
+	t_memblock	*next;
+	t_memblock	*prev;
+	t_memblock	*start;
+	t_memblock	*end;
+}				t_largelist;
 
-typedef struct	s_fMemBlocks
+typedef struct	s_fmemblocks
 {
-	t_tinyList	*tinyList;
-	t_smallList	*smallList;
-	t_largeList	*largeList;
-}				t_fMemBlocks;
+	t_tinylist	*tinylist;
+	t_smalllist	*smalllist;
+	t_largelist	*largelist;
+}				t_fmemblocks;
 
-t_fMemBlocks	firstMemBlocks;
+t_fmemblocks	g_firstmemblocks = NULL;
 
 void			free(void *ptr);
 void			*malloc(size_t size);

@@ -28,7 +28,11 @@ O_DIR = obj/
 C_FILES = malloc.c
 C_FILES += free.c
 C_FILES += realloc.c
-C_FILES += 
+C_FILES += mapFirstMemBlocks.c
+C_FILES += initTinyMemBlock.c
+C_FILES += initSmallMemBlock.c
+C_FILES += initLargeMemBlock.c
+C_FILES +=
 
 O_FILES = $(addprefix $(O_DIR),$(C_FILES:.c=.o))
 
