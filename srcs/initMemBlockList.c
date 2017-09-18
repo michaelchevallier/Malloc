@@ -14,15 +14,12 @@
 
 void		initMemBlockList(t_memblocklist *list, t_blocktype type)
 {
-	list->size = 0;
-	list->type = type;
-	list->next = NULL;
 	if (type == TINY)
 		setTiny(list);
 	else if (type == SMALL)
 		setSmall(list);
 	else if (type == LARGE)
-		setLarge(list);
+		setLarge(list, 0);
 	else
 		return ;
 

@@ -12,15 +12,13 @@
 
 #include "../includes/malloc.h"
 
-void		setLarge(t_memblocklist *list)
+int		setLarge(t_memblocklist *list, size_t size)
 {
-	int			i;
-
-	i = 0;
-	list->current = (t_memblock *)mmap(0, sizeof(t_memblock),
+	list->starting_address = (void *)mmap(0, size,
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
-	list->size += 1;
-	list->current->size = 0;
-	list->current->starting_address = NULL;
-	list->current->type = LARGE;
+	if (list->starting_address == MAP_FAILED)
+		return (-1);
+	list->type = LARGE;
+	list->next = NULL;
+	return (0);
 }

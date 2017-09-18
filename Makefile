@@ -33,7 +33,9 @@ C_FILES += initMemBlockList.c
 C_FILES += setTiny.c
 C_FILES += setSmall.c
 C_FILES += setLarge.c
-C_FILES +=
+C_FILES += tinyblock.c
+C_FILES += smallblock.c
+C_FILES += largeblock.c
 
 O_FILES = $(addprefix $(O_DIR),$(C_FILES:.c=.o))
 

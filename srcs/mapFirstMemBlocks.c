@@ -24,8 +24,9 @@ t_fmemblocks		*mapFirstMemBlocks()
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
 	fmemblocks->largelist = (t_memblocklist *)mmap(0, sizeof(t_memblocklist),
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
-	initMemBlockList(fmemblocks->tinylist, TINY);
-	initMemBlockList(fmemblocks->smalllist, SMALL);
-	initMemBlockList(fmemblocks->largelist, LARGE);
+	if ((initMemBlockList(fmemblocks->tinylist, TINY)) ||
+		(initMemBlockList(fmemblocks->smalllist, SMALL)) ||
+		(initMemBlockList(fmemblocks->largelist, LARGE)))
+		return (NULL);
 	return (fmemblocks);
 }

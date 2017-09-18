@@ -12,21 +12,21 @@
 
 #include "../includes/malloc.h"
 
-void		setSmall(t_memblocklist *list)
+int				setSmall(t_memblocklist *list)
 {
 	int			i;
 
 	i = 0;
-	list->current = (t_memblock *)mmap(0, sizeof(t_memblock),
+	list->starting_address = (void *)mmap(0, SMALLSIZE,
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
-	list->size += 1;
-	list->current->size = SMALLSIZE * PAGESIZE;
-	list->current->starting_address = (void *)mmap(0, SMALLSIZE * PAGESIZE,
-		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
-	list->current->type = SMALL;
+	if (list->starting_address == MAP_FAILED)
+		return (-1);
+	list->type = SMALL;
+	list->next = NULL;
 	while (i < BLOCKDIV)
 	{
-		list->current->alloted_mem[i] = 0;
+		list->alloted_mem[i] = 0;
 		i++;
 	}
+	return (0);
 }
