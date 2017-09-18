@@ -24,8 +24,8 @@
 
 # define TINYSIZE (size_t)(10 * PAGESIZE)
 # define SMALLSIZE (size_t)(100 * PAGESIZE)
-# define TINYBLOCK ((TINYSIZE) / (100))
-# define SMALLBLOCK ((SMALLSIZE) / (100))
+# define TBLOCK ((TINYSIZE) / (100))
+# define SBLOCK ((SMALLSIZE) / (100))
 
 typedef enum				e_blocktype
 {
@@ -38,7 +38,7 @@ typedef enum				e_blocktype
 
 typedef struct				s_memblocklist
 {
-	void					*starting_address;
+	void					*start_add;
 	size_t					alloted_mem[BLOCKDIV];
 	t_blocktype				type;
 	struct s_memblocklist	*next;
@@ -63,8 +63,10 @@ int							setSmall(t_memblocklist *list);
 int							setLarge(t_memblocklist *list, size_t size);
 void						*assignBlock(t_memblocklist *list, size_t size);
 int							createNewMemBlock(t_memblocklist *list, t_blocktype type, size_t size);
+void						findPtr(void *ptr);
+int							isSamePtr(void *ptr1, void *ptr2);
 // t_block				initBlock(t_block block, int i, t_memblock *memblock);
 
-//t_fmemblocks		*g_fmem = NULL;
+extern t_fmemblocks		*g_fmem;
 
 #endif

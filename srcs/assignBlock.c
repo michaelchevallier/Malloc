@@ -12,13 +12,11 @@
 
 #include "../includes/malloc.h"
 
-int				largeSpecialCase(t_memblocklist *original_list, t_memblocklist *list, size_t size)
+int				largeSpecialCase(t_memblocklist *list, size_t size)
 {
 	if (setLarge(list, size) == -1)
 		return (-1);
 	list->alloted_mem[0] = size;
-	if (createNewMemBlock(original_list, list->type, size) == -1)
-		return (-1);
 	return (0);
 }
 
@@ -32,28 +30,28 @@ void			*assignBlock(t_memblocklist *list, size_t size)
 		while (tmplist->alloted_mem[i] != 0)
 		{
 			i++;
-			if (i == BLOCKDIV || size > SMALLBLOCK)
+			if (i == BLOCKDIV || list->type == LARGE)
 			{
-				if ((tmplist = tmplist->next) == NULL)
-					return (NULL);
+				if (tmplist->next == NULL)
+					if (createNewMemBlock(list, tmplist->type, size) == -1)
+						return (NULL);
+					tmplist = tmplist->next;
 				i = 0;
 			}
 		}
 		tmplist->alloted_mem[i] = size;
-		if (i == 99 && createNewMemBlock(list, tmplist->type, size) == -1)
-			return (NULL);
 		if (tmplist->type == TINY)
 		{
-		// printf("\n\nassignBlock\n[TYPE : {%d}]\n[STARTING_ADDRESS : {%p}]\n[ALLOTED_MEM [%d] : {%lu}]", list->type, tmplist->starting_address, i, tmplist->alloted_mem[i]);
-			return (tmplist->starting_address + (i * TINYBLOCK));
+		printf("\nassignBlock\n[TYPE : {%d}]\n[start_add : {%p}]\n[ALLOTED_MEM [%d] : {%lu}]\n", list->type, tmplist->start_add, i, tmplist->alloted_mem[i]);
+			return (tmplist->start_add + (i * TBLOCK));
 		}
 		else if (tmplist->type == SMALL)
 		{
-		// printf("\n\nassignBlock\n[TYPE : {%d}]\n[STARTING_ADDRESS : {%p}]\n[ALLOTED_MEM [%d] : {%lu}]", list->type, tmplist->starting_address, i, tmplist->alloted_mem[i]);
-			return (tmplist->starting_address + (i * SMALLBLOCK));
+		printf("\nassignBlock\n[TYPE : {%d}]\n[start_add : {%p}]\n[ALLOTED_MEM [%d] : {%lu}]\n", list->type, tmplist->start_add, i, tmplist->alloted_mem[i]);
+			return (tmplist->start_add + (i * SBLOCK));
 		}
-		if (largeSpecialCase(list, tmplist, size) == -1)
+		if (largeSpecialCase(tmplist, size) == -1)
 			return (NULL);
-		// printf("\n\nassignBlock\n[TYPE : {%d}]\n[STARTING_ADDRESS : {%p}]\n[ALLOTED_MEM [%d] : {%lu}]",list->type, tmplist->starting_address, i, tmplist->alloted_mem[i]);
-		return (tmplist->starting_address);
+		printf("\nassignBlock\n[TYPE : {%d}]\n[start_add : {%p}]\n[ALLOTED_MEM [%d] : {%lu}]\n",list->type, tmplist->start_add, i, tmplist->alloted_mem[i]);
+		return (tmplist->start_add);
 }

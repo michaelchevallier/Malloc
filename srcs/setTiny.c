@@ -17,9 +17,9 @@ int			setTiny(t_memblocklist *list)
 	int			i;
 
 	i = 0;
-	list->starting_address = (void *)mmap(0, TINYSIZE,
+	list->start_add = (void *)mmap(0, TINYSIZE,
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
-	if (list->starting_address == MAP_FAILED)
+	if (list->start_add == MAP_FAILED)
 		return (-1);
 	list->type = TINY;
 	list->next = NULL;

@@ -1,15 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   realloc.c                                          :+:      :+:    :+:   */
+/*   isSamePtr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mchevall <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/13 16:31:49 by mchevall          #+#    #+#             */
-/*   Updated: 2017/09/13 16:32:00 by mchevall         ###   ########.fr       */
+/*   Created: 2017/09/18 15:15:10 by mchevall          #+#    #+#             */
+/*   Updated: 2017/09/18 15:16:05 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-void						*realloc(void *ptr, size_t size);
+int		isSamePtr(void *ptr1, void *ptr2)
+{
+	if (ptr1 == ptr2)
+		return (1);
+	else
+		return (0);
+}

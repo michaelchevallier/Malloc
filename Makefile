@@ -35,6 +35,8 @@ C_FILES += setSmall.c
 C_FILES += setLarge.c
 C_FILES += assignBlock.c
 C_FILES += createNewMemBlock.c
+C_FILES += findPtr.c
+C_FILES += isSamePtr.c
 
 O_FILES = $(addprefix $(O_DIR),$(C_FILES:.c=.o))
 

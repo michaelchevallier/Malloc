@@ -12,7 +12,7 @@
 
 #include "../includes/malloc.h"
 
-t_fmemblocks		*g_fmem = NULL;
+t_fmemblocks	*g_fmem = NULL;
 
 void			*malloc(size_t size)
 {
@@ -21,9 +21,9 @@ void			*malloc(size_t size)
 		if ((g_fmem = mapFirstMemBlocks()) == NULL)
 			return (NULL);
 	// printf("\nsize: %lu\n", size);
-	if (size <= TINYBLOCK)
+	if (size <= TBLOCK)
 		malloc = assignBlock(g_fmem->tinylist, size);
-	else if (size <= SMALLBLOCK)
+	else if (size <= SBLOCK)
 		malloc = assignBlock(g_fmem->smalllist, size);
 	else
 		malloc = assignBlock(g_fmem->largelist, size);
