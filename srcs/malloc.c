@@ -18,14 +18,15 @@ void			*malloc(size_t size)
 {
 	void		*malloc;
 	if (g_fmem == NULL)
-		if (g_fmem = mapFirstMemBlocks() == NULL)
+		if ((g_fmem = mapFirstMemBlocks()) == NULL)
 			return (NULL);
-	if (size < TINYBLOCK)
-		malloc = tinyblock(g_fmem->tinylist)
-	if (size < SMALLBLOCK)
-		malloc = smallblock(g_fmem->smalllist);
+	// printf("\nsize: %lu\n", size);
+	if (size <= TINYBLOCK)
+		malloc = assignBlock(g_fmem->tinylist, size);
+	else if (size <= SMALLBLOCK)
+		malloc = assignBlock(g_fmem->smalllist, size);
 	else
-		malloc = largeblock(g_fmem->largelist, size);
+		malloc = assignBlock(g_fmem->largelist, size);
 	// printf("address : [%p] [%p] [%p] [%p]\n ", g_fmem, g_fmem->tinylist, g_fmem->smalllist, g_fmem->largelist);
 	// printf("sizeof : [%lu], [%d] [%d] [%d]\n",
 	// 	sizeof(g_fmem), g_fmem->tinylist->type, g_fmem->smalllist->type, g_fmem->largelist->type);

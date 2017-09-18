@@ -22,10 +22,10 @@
 # define BLOCKDIV 100
 # define PAGESIZE getpagesize()
 
-# define TINYSIZE 10 * PAGESIZE
-# define SMALLSIZE 100 * PAGESIZE
-# define TINYBLOCK TINYSIZE / 100
-# define SMALLBLOCK SMALLSIZE / 100
+# define TINYSIZE (size_t)(10 * PAGESIZE)
+# define SMALLSIZE (size_t)(100 * PAGESIZE)
+# define TINYBLOCK ((TINYSIZE) / (100))
+# define SMALLBLOCK ((SMALLSIZE) / (100))
 
 typedef enum				e_blocktype
 {
@@ -55,15 +55,14 @@ typedef struct				s_fmemblocks
 void						free(void *ptr);
 void						*malloc(size_t size);
 void						*realloc(void *ptr, size_t size);
-void						show_alloc_mem();
-t_fmemblocks				*mapFirstMemBlocks();
-void						initMemBlockList(t_memblocklist *list, t_blocktype type);
+void						show_alloc_mem(void);
+t_fmemblocks				*mapFirstMemBlocks(void);
+int							initMemBlockList(t_memblocklist *list, t_blocktype type);
 int							setTiny(t_memblocklist *list);
 int							setSmall(t_memblocklist *list);
 int							setLarge(t_memblocklist *list, size_t size);
-void						*tinyblock(t_memblock *list);
-void						*smallblock(t_memblock *list);
-void						*largeblock(t_memblock *list, size_t size);
+void						*assignBlock(t_memblocklist *list, size_t size);
+int							createNewMemBlock(t_memblocklist *list, t_blocktype type, size_t size);
 // t_block				initBlock(t_block block, int i, t_memblock *memblock);
 
 //t_fmemblocks		*g_fmem = NULL;

@@ -12,15 +12,15 @@
 
 #include "../includes/malloc.h"
 
-void		initMemBlockList(t_memblocklist *list, t_blocktype type)
+int		initMemBlockList(t_memblocklist *list, t_blocktype type)
 {
-	if (type == TINY)
-		setTiny(list);
-	else if (type == SMALL)
-		setSmall(list);
-	else if (type == LARGE)
-		setLarge(list, 0);
+	if (type == TINY && setTiny(list) == -1)
+		return (-1);
+	else if (type == SMALL && setSmall(list) == -1)
+		return (-1);
+	else if (type == LARGE && setLarge(list, 0) == -1)
+		return (-1);
 	else
-		return ;
+		return (0);
 
 }

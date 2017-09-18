@@ -12,7 +12,7 @@
 
 #include "../includes/malloc.h"
 
-t_fmemblocks		*mapFirstMemBlocks()
+t_fmemblocks		*mapFirstMemBlocks(void)
 {
 	t_fmemblocks		*fmemblocks;
 
@@ -24,9 +24,9 @@ t_fmemblocks		*mapFirstMemBlocks()
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
 	fmemblocks->largelist = (t_memblocklist *)mmap(0, sizeof(t_memblocklist),
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
-	if ((initMemBlockList(fmemblocks->tinylist, TINY)) ||
-		(initMemBlockList(fmemblocks->smalllist, SMALL)) ||
-		(initMemBlockList(fmemblocks->largelist, LARGE)))
+	if ((initMemBlockList(fmemblocks->tinylist, TINY)) == -1 ||
+		(initMemBlockList(fmemblocks->smalllist, SMALL)) == -1 ||
+		(initMemBlockList(fmemblocks->largelist, LARGE)) == -1)
 		return (NULL);
 	return (fmemblocks);
 }

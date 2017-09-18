@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setLarge.c                                         :+:      :+:    :+:   */
+/*   createNewMemBlock.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mchevall <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/14 13:59:14 by mchevall          #+#    #+#             */
-/*   Updated: 2017/09/14 13:59:21 by mchevall         ###   ########.fr       */
+/*   Created: 2017/09/18 14:00:29 by mchevall          #+#    #+#             */
+/*   Updated: 2017/09/18 14:00:39 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-int		setLarge(t_memblocklist *list, size_t size)
+int		createNewMemBlock(t_memblocklist *list, t_blocktype type, size_t size)
 {
-	int		i;
+	t_memblocklist		*newBlock;
+	t_memblocklist		*tmplist;
 
-	i = 0;
-	if (size != 0)
-	list->starting_address = (void *)mmap(0, size,
+	tmplist = list;
+	newBlock = (t_memblocklist *)mmap(0, sizeof(t_memblocklist),
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
-	if (list->starting_address == MAP_FAILED)
+	if (newBlock == MAP_FAILED)
 		return (-1);
-	list->type = LARGE;
-	list->next = NULL;
-	while (i < BLOCKDIV)
-	{
-		list->alloted_mem[i] = 0;
-		i++;
-	}
+	if (type == TINY && setTiny(newBlock) == -1)
+		return (-1);
+	if (type == SMALL && setSmall(newBlock) == -1)
+		return(-1);
+	if (type == LARGE && setLarge(newBlock, size) == -1)
+		return (-1);
+	while (tmplist->next != NULL)
+		tmplist = tmplist->next;
+	tmplist->next = newBlock;
 	return (0);
 }
