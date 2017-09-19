@@ -97,6 +97,8 @@ void				ft_putendl(char const *s);
 void				ft_putendl_fd(char const *s, int fd);
 void				ft_putnbr(int n);
 void				ft_putnbr_fd(int n, int fd);
+void				ft_sputnbr(size_t n);
+void				ft_sputnbr_fd(size_t n, int fd);
 void				ft_putstr(char const *s);
 void				ft_putstr_fd(char const*s, int fd);
 char				**ft_realloc(char **tab);
@@ -130,5 +132,6 @@ char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strtrim(char const *s);
 int					ft_tolower(int c);
 char				*ft_strtolower(char *str);
+char				*ft_strtoupper(char *str);
 int					ft_toupper(int c);
 #endif

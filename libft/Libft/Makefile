@@ -6,7 +6,7 @@
 #    By: mchevall <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/13 13:06:47 by mchevall          #+#    #+#              #
-#    Updated: 2017/09/13 13:06:50 by mchevall         ###   ########.fr        #
+#    Updated: 2017/09/19 16:44:34 by mchevall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,9 @@ C_FILES += ft_putendl_fd.c
 C_FILES += ft_putlsthead.c
 C_FILES += ft_putlsttail.c
 C_FILES += ft_putnbr.c
+C_FILES += ft_sputnbr.c
 C_FILES += ft_putnbr_fd.c
+C_FILES += ft_sputnbr_fd.c
 C_FILES += ft_putstr.c
 C_FILES += ft_putstr_fd.c
 C_FILES += ft_realloc.c
@@ -94,6 +96,7 @@ C_FILES += ft_strsub.c
 C_FILES += ft_strtrim.c
 C_FILES += ft_tolower.c
 C_FILES += ft_strtolower.c
+C_FILES += ft_strtoupper.c
 C_FILES += ft_toupper.c
 C_FILES += get_next_line.c
 

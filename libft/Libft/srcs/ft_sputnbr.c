@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_sputnbr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpaincha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mchevall <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/23 13:25:02 by mpaincha          #+#    #+#             */
-/*   Updated: 2017/09/19 16:43:24 by mchevall         ###   ########.fr       */
+/*   Created: 2017/09/19 16:42:08 by mchevall          #+#    #+#             */
+/*   Updated: 2017/09/19 16:43:12 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void	ft_sputnbr(size_t n)
 {
-	unsigned int	nb;
-
-	nb = n;
-	if (n < 0)
-	{
-		nb = -n;
-		ft_putchar_fd('-', fd);
-	}
-	if (nb > 9)
-	{
-		ft_putnbr_fd((nb / 10), fd);
-		ft_putnbr_fd((nb % 10), fd);
-	}
-	else
-		ft_putchar_fd(nb + 48, fd);
+	ft_sputnbr_fd(n, 1);
 }

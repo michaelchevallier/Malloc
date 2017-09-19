@@ -12,4 +12,126 @@
 
 #include "../includes/malloc.h"
 
-void		show_alloc_mem(void);
+static void				printmeminfo(t_memblocklist *list)
+{
+	int					i;
+
+	i = 0;
+// ft_putstr("\nprintmeminfo\n");
+	if (list->type == TINY)
+		ft_putstr("TINY : ");
+	else if (list->type == SMALL)
+		ft_putstr("SMALL : ");
+	else
+		ft_putstr("LARGE : ");
+	// printf("%p\n",list->start_add);
+	putoabase((uintmax_t)list->start_add, 16);
+	ft_putchar('\n');
+	while (i < BLOCKDIV)
+	{
+		if (list->alloted_mem[i] > 0)
+		{
+	// printf("%p\n", list->start_add);
+			if (list->type == TINY)
+				putoabase((uintmax_t)list->start_add + (i * TBLOCK), 16);
+			else if (list->type == SMALL)
+				putoabase((uintmax_t)list->start_add + (i * SBLOCK), 16);
+			else
+				putoabase((uintmax_t)list->start_add, 16);
+			ft_putstr(" - ");
+
+	// printf("%p\n", list->start_add);
+			if (list->type == TINY)
+				putoabase((uintmax_t)list->start_add + (i * TBLOCK) + list->alloted_mem[i], 16);
+			else if (list->type == SMALL)
+				putoabase((uintmax_t)list->start_add + (i * SBLOCK) + list->alloted_mem[i], 16);
+			else
+				putoabase((uintmax_t)list->start_add + list->alloted_mem[i], 16);
+			ft_putstr(" : ");
+			ft_sputnbr(list->alloted_mem[i]);
+			ft_putendl(" octets");
+		}
+		i++;
+	}
+// ft_putstr("\nprintmeminfo -> return\n");
+}
+
+static t_memblocklist	*compareAddresses(t_memblocklist *list1,
+	t_memblocklist *list2, t_memblocklist *list3)
+{
+	void	*list1addr;
+	void	*list2addr;
+	void	*list3addr;
+
+// ft_putstr("\ncompareAddress\n");
+// printf("%p, %p, %p\n", list1, list2, list3);
+	if (list1 == NULL && list2 == NULL && list3 == NULL)
+		return (NULL);
+	if (list1 == NULL)
+		list1addr = (void *)-1;
+	else
+		list1addr = list1->start_add;
+	if (list2 == NULL)
+		list2addr = (void *)-1;
+	else
+		list2addr = list2->start_add;
+	if (list3 == NULL)
+		list3addr = (void *)-1;
+	else
+		list3addr = list3->start_add;
+// ft_putstr("\ncompareAddress -> return\n");
+	if (list1addr < list2addr && list1addr < list3addr)
+		return (list1);
+	if (list2addr < list1addr && list2addr < list3addr)
+		return (list2);
+	if (list3addr < list1addr && list3addr < list2addr)
+		return (list3);
+	return (NULL);
+}
+
+static void				*findPossibleAddress(t_memblocklist *list, void *addr)
+{
+	t_memblocklist		*tmplist;
+	t_memblocklist		*returnedlist;
+	void				*currentsmall;
+
+// ft_putstr("\nfindPossibleAddress\n");
+	tmplist = list;
+	currentsmall = (void *)-1;
+	returnedlist = NULL;
+	while (tmplist)
+	{
+		if (list->start_add > addr && list->start_add < currentsmall)
+		{
+			currentsmall = list->start_add;
+			returnedlist = tmplist;
+		}
+		tmplist = tmplist->next;
+	}
+// ft_putstr("\nfindPossibleAddress -> return\n");
+	return (returnedlist);
+}
+
+void					show_alloc_mem()
+{
+	int					i;
+	void				*prevaddr;
+	t_memblocklist		*list;
+
+	i = 0;
+	prevaddr = (void *)0;
+ft_putchar('\n');
+	while (i == 0)
+	{
+		if ((list = compareAddresses(
+			findPossibleAddress(g_fmem->tinylist, prevaddr),
+			findPossibleAddress(g_fmem->smalllist, prevaddr),
+			findPossibleAddress(g_fmem->largelist, prevaddr))) == NULL)
+			i = 1;
+		else
+		{
+			printmeminfo(list);
+			prevaddr = list->start_add;
+		}
+	}
+}

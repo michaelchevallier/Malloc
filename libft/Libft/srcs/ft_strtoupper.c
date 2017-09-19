@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_strtoupper.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpaincha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mchevall <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/23 13:25:02 by mpaincha          #+#    #+#             */
-/*   Updated: 2017/09/19 16:43:24 by mchevall         ###   ########.fr       */
+/*   Created: 2017/09/19 14:31:35 by mchevall          #+#    #+#             */
+/*   Updated: 2017/09/19 14:31:58 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+char		*ft_strtoupper(char *str)
 {
-	unsigned int	nb;
+	int		i;
 
-	nb = n;
-	if (n < 0)
+	i = 0;
+	if (!str)
+		return (NULL);
+	while (str[i])
 	{
-		nb = -n;
-		ft_putchar_fd('-', fd);
+		str[i] = ft_toupper(str[i]);
+		i++;
 	}
-	if (nb > 9)
-	{
-		ft_putnbr_fd((nb / 10), fd);
-		ft_putnbr_fd((nb % 10), fd);
-	}
-	else
-		ft_putchar_fd(nb + 48, fd);
+	return (str);
 }

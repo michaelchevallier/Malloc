@@ -6,7 +6,7 @@
 #    By: mchevall <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/13 15:49:31 by mchevall          #+#    #+#              #
-#    Updated: 2017/09/13 16:56:29 by mchevall         ###   ########.fr        #
+#    Updated: 2017/09/19 12:59:09 by mchevall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ endif
 NAME = libft_malloc_$(HOSTTYPE).so
 LINKNAME = libft_malloc
 PRINTF = libft/
+PRINTFLIB = libft/libft.a
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
@@ -35,17 +36,21 @@ C_FILES += setSmall.c
 C_FILES += setLarge.c
 C_FILES += assignBlock.c
 C_FILES += createNewMemBlock.c
-C_FILES += findPtr.c
 C_FILES += isSamePtr.c
+C_FILES += putoabase.c
+C_FILES += show_alloc_mem.c
 
 O_FILES = $(addprefix $(O_DIR),$(C_FILES:.c=.o))
 
 MAIN = main.c
 
-all: libft $(NAME)
+all:
+	make -C $(PRINTF)
+	make $(NAME)
 
 $(NAME): $(O_FILES)
 	ar rc $@ $^
+	libtool -static -o $@ $@ libft/libft.a
 	ranlib $@
 	ln -s $(NAME) $(LINKNAME)
 
@@ -54,7 +59,7 @@ $(O_FILES): $(O_DIR)%.o: $(C_DIR)%.c
 	$(CC) $(FLAGS) -o $@ -c $<
 
 libft:
-	make -C $(PRINTF) all
+	@make -C $(PRINTF) all
 
 clean:
 	@make -C $(PRINTF) clean

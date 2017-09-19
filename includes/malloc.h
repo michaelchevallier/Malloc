@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <sys/mman.h>
 # include <sys/resource.h>
+# include "../libft/includes/ft_printf.h"
 
 #include <stdio.h>
 
@@ -26,6 +27,8 @@
 # define SMALLSIZE (size_t)(100 * PAGESIZE)
 # define TBLOCK ((TINYSIZE) / (100))
 # define SBLOCK ((SMALLSIZE) / (100))
+# define TBLOCKADDR start_add + (i * TBLOCK)
+# define SBLOCKADDR start_add + (i * SBLOCK)
 
 typedef enum				e_blocktype
 {
@@ -65,6 +68,7 @@ void						*assignBlock(t_memblocklist *list, size_t size);
 int							createNewMemBlock(t_memblocklist *list, t_blocktype type, size_t size);
 void						findPtr(void *ptr);
 int							isSamePtr(void *ptr1, void *ptr2);
+void						putoabase(uintmax_t n, size_t base);
 // t_block				initBlock(t_block block, int i, t_memblock *memblock);
 
 extern t_fmemblocks		*g_fmem;
