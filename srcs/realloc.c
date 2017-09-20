@@ -76,7 +76,9 @@ static void		*tryrealloc(t_memblocklist *list, int i, size_t size)
 	{
 		if ((ptr = malloc(size)) == NULL)
 			return (NULL);
+	// show_alloc_mem();
 		ft_memcpy(ptr, (const void *)list->start_add, cpysize);
+	printf("############################################# DEBUG : [ %p ] [ %p ]\n", ptr, list->start_add);
 		free(list->start_add);
 	}
 	return (ptr);
@@ -109,6 +111,7 @@ static void		*findAddrInList(void *ptr, t_memblocklist *list, size_t size)
 			return (tryrealloc(tmplist, 0, size));
 		tmplist = tmplist->next;
 	}
+	printf("############################################### DEBUG pas trouver\n");
 	return ((void *)-1);
 }
 

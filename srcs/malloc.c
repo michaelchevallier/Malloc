@@ -27,6 +27,7 @@ void			*malloc(size_t size)
 		malloc = assignBlock(g_fmem->smalllist, size);
 	else
 		malloc = assignBlock(g_fmem->largelist, size);
+
 	// printf("address : [%p] [%p] [%p] [%p]\n ", g_fmem, g_fmem->tinylist, g_fmem->smalllist, g_fmem->largelist);
 	// printf("sizeof : [%lu], [%d] [%d] [%d]\n",
 	// 	sizeof(g_fmem), g_fmem->tinylist->type, g_fmem->smalllist->type, g_fmem->largelist->type);

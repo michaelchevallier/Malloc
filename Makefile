@@ -6,7 +6,7 @@
 #    By: mchevall <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/13 15:49:31 by mchevall          #+#    #+#              #
-#    Updated: 2017/09/19 12:59:09 by mchevall         ###   ########.fr        #
+#    Updated: 2017/09/20 13:10:08 by mchevall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ fclean: clean
 
 re: fclean all
 
-test: re
+test: $(NAME)
 	$(CC) srcs/$(MAIN) $(NAME)
 
 testclean: fclean

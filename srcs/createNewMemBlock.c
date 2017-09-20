@@ -12,7 +12,7 @@
 
 #include "../includes/malloc.h"
 
-int		createNewMemBlock(t_memblocklist *list, t_blocktype type, size_t size)
+int		createNewMemBlock(t_memblocklist *list, t_blocktype type)
 {
 	t_memblocklist		*newBlock;
 	t_memblocklist		*tmplist;
@@ -20,14 +20,15 @@ int		createNewMemBlock(t_memblocklist *list, t_blocktype type, size_t size)
 	tmplist = list;
 	newBlock = (t_memblocklist *)mmap(0, sizeof(t_memblocklist),
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
+printf("############################################### DEBUG newBlock: [%p]\n", newBlock);
 	if (newBlock == MAP_FAILED)
 		return (-1);
 	if (type == TINY && setTiny(newBlock) == -1)
 		return (-1);
 	if (type == SMALL && setSmall(newBlock) == -1)
 		return(-1);
-	if (type == LARGE && setLarge(newBlock, size) == -1)
-		return (-1);
+	if (type == LARGE)
+		setLarge(newBlock, 0);
 	while (tmplist->next != NULL)
 		tmplist = tmplist->next;
 	tmplist->next = newBlock;

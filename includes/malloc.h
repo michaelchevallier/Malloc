@@ -65,7 +65,7 @@ int							setTiny(t_memblocklist *list);
 int							setSmall(t_memblocklist *list);
 int							setLarge(t_memblocklist *list, size_t size);
 void						*assignBlock(t_memblocklist *list, size_t size);
-int							createNewMemBlock(t_memblocklist *list, t_blocktype type, size_t size);
+int							createNewMemBlock(t_memblocklist *list, t_blocktype type);
 void						findPtr(void *ptr);
 int							isSamePtr(void *ptr1, void *ptr2);
 void						putoabase(uintmax_t n, size_t base);

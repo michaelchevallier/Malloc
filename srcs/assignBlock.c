@@ -14,6 +14,7 @@
 
 int				largeSpecialCase(t_memblocklist *list, size_t size)
 {
+	show_alloc_mem();
 	if (setLarge(list, size) == -1)
 		return (-1);
 	list->alloted_mem[0] = size;
@@ -27,13 +28,16 @@ void			*assignBlock(t_memblocklist *list, size_t size)
 
 		i = 0;
 		tmplist = list;
+	printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ DEBUG assignBlock: %lu { %p }\n", tmplist->alloted_mem[i], tmplist->start_add);
 		while (tmplist->alloted_mem[i] != 0)
 		{
+	printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ DEBUG assignBlock: %lu { %p }\n", tmplist->alloted_mem[i], tmplist->start_add);
+
 			i++;
 			if (i == BLOCKDIV || list->type == LARGE)
 			{
 				if (tmplist->next == NULL)
-					if (createNewMemBlock(list, tmplist->type, size) == -1)
+					if (createNewMemBlock(list, tmplist->type) == -1)
 						return (NULL);
 					tmplist = tmplist->next;
 				i = 0;
@@ -52,6 +56,6 @@ void			*assignBlock(t_memblocklist *list, size_t size)
 		}
 		if (largeSpecialCase(tmplist, size) == -1)
 			return (NULL);
-		// printf("\nassignBlock\n[TYPE : {%d}]\n[start_add : {%p}]\n[ALLOTED_MEM [%d] : {%lu}]\n",list->type, tmplist->start_add, i, tmplist->alloted_mem[i]);
+		printf("\nassignBlock\n[TYPE : {%d}]\n[start_add : {%p}]\n[ALLOTED_MEM [%d] : {%lu}]\n",list->type, tmplist->start_add, i, tmplist->alloted_mem[i]);
 		return (tmplist->start_add);
 }

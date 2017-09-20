@@ -22,11 +22,14 @@ static void	removeFromList(t_memblocklist *list, t_memblocklist *o_list)
 	tmplist = o_list->next;
 	tmplist2 = o_list;
 
-	while (tmplist->next != NULL)
+	while (tmplist != NULL)
 	{
+		printf("\n yolo : [ %p ] , [ %p ]        {[ %p ],  [ %p ]}\n", tmplist, list, g_fmem->smalllist, g_fmem->tinylist);
+
 		if (isSamePtr((void *)tmplist, (void *)list))
 		{
-			munmap(list->start_add, sizeof(t_memblocklist));
+	printf("#######################################################################DEBUG [ %p ]\n", list);
+			munmap(list, sizeof(t_memblocklist));
 			tmplist2->next = tmplist->next;
 			return ;
 		}
@@ -52,8 +55,9 @@ static void		freeAndDestroy(t_memblocklist *list)
 	if (list->type == LARGE)
 	{
 		munmap(list->start_add, list->alloted_mem[0]);
-		if (!(isSamePtr((void *)list, (void *)(g_fmem->largelist))))
-			removeFromList(list, g_fmem->largelist);
+		// if (isSamePtr((void *)list, (void *)(g_fmem->largelist)))
+			// return ;
+		removeFromList(list, g_fmem->largelist);
 	}
 }
 
@@ -73,7 +77,8 @@ static void		*freeptr(t_memblocklist *list, int i)
 	if ((isSamePtr((void *)list, (void *)g_fmem->tinylist) ||
 		isSamePtr((void *)list, (void *)g_fmem->smalllist)))
 		return (NULL);
-	else if (isSamePtr((void *)list, (void *)(g_fmem->largelist)))
+	else
+	// (isSamePtr((void *)list, (void *)(g_fmem->largelist)))
 		list->alloted_mem[i] = 0;
 	freeAndDestroy(list);
 	return (NULL);
@@ -107,7 +112,7 @@ static void		*findAddrInList(void *ptr, t_memblocklist *list)
 			return (freeptr(tmplist, 0));
 		tmplist = tmplist->next;
 	}
-printf("YOOOOOOOOOOOOLLLLLLLLLLLLLLLLL##########################\n");
+printf("############################################### DEBuG pas trouver free\n");
 	return ((void *)-1);
 }
 
