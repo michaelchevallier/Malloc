@@ -28,7 +28,7 @@ static void		*smallrealloc(t_memblocklist *list, int i, size_t size,
 		if (ptr == NULL)
 			return (NULL);
 		ft_memcpy(ptr, (const void *)list->SBLOCKADDR, cpysize);
-		free(list->start_add);
+		free(list->SBLOCKADDR);
 	}
 	return (ptr);
 }
@@ -37,6 +37,7 @@ static void		*tinyrealloc(t_memblocklist *list, int i, size_t size,
 	size_t cpysize)
 {
 	void			*ptr;
+
 	if (size <= TBLOCK)
 	{
 		ptr = list->TBLOCKADDR;
@@ -48,7 +49,7 @@ static void		*tinyrealloc(t_memblocklist *list, int i, size_t size,
 		if (ptr == NULL)
 			return (NULL);
 		ft_memcpy(ptr, (const void *)list->TBLOCKADDR, cpysize);
-		free(list->start_add);
+		free(list->TBLOCKADDR);
 	}
 	return (ptr);
 
@@ -73,7 +74,7 @@ static void		*tryrealloc(t_memblocklist *list, int i, size_t size)
 		return (NULL);
 	else if (list->type == LARGE)
 	{
-		ptr = malloc(size);
+		if ((ptr = malloc(size)) == NULL)
 			return (NULL);
 		ft_memcpy(ptr, (const void *)list->start_add, cpysize);
 		free(list->start_add);
@@ -83,7 +84,6 @@ static void		*tryrealloc(t_memblocklist *list, int i, size_t size)
 
 static void		*findAddrInList(void *ptr, t_memblocklist *list, size_t size)
 {
-	printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ REALLOC FINDADDRINLIST ^^^^^^^^^^^^^^^^^^^^^^^^^ \n");
 	t_memblocklist	*tmplist;
 	int				i;
 
@@ -117,11 +117,12 @@ void						*realloc(void *ptr, size_t size)
 	void		*returnedpointer;
 
 
-	printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ REALLOC ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
 	if (ptr == NULL)
 		return (NULL);
 	returnedpointer = findAddrInList(ptr, g_fmem->largelist, size);
 	returnedpointer = findAddrInList(ptr, g_fmem->smalllist, size);
 	returnedpointer = findAddrInList(ptr, g_fmem->tinylist, size);
+	if (returnedpointer == (void *)-1)
+		return (NULL);
 	return (returnedpointer);
 }

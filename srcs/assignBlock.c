@@ -42,16 +42,16 @@ void			*assignBlock(t_memblocklist *list, size_t size)
 		tmplist->alloted_mem[i] = size;
 		if (tmplist->type == TINY)
 		{
-		printf("\nassignBlock\n[TYPE : {%d}]\n[start_add : {%p}]\n[ALLOTED_MEM [%d] : {%lu}]\n", list->type, tmplist->start_add, i, tmplist->alloted_mem[i]);
+		// printf("\nassignBlock\n[TYPE : {%d}]\n[start_add : {%p}]\n[ALLOTED_MEM [%d] : {%lu}]\n", list->type, tmplist->start_add, i, tmplist->alloted_mem[i]);
 			return (tmplist->start_add + (i * TBLOCK));
 		}
 		else if (tmplist->type == SMALL)
 		{
-		printf("\nassignBlock\n[TYPE : {%d}]\n[start_add : {%p}]\n[ALLOTED_MEM [%d] : {%lu}]\n", list->type, tmplist->start_add, i, tmplist->alloted_mem[i]);
+		// printf("\nassignBlock\n[TYPE : {%d}]\n[start_add : {%p}]\n[ALLOTED_MEM [%d] : {%lu}]\n", list->type, tmplist->start_add, i, tmplist->alloted_mem[i]);
 			return (tmplist->start_add + (i * SBLOCK));
 		}
 		if (largeSpecialCase(tmplist, size) == -1)
 			return (NULL);
-		printf("\nassignBlock\n[TYPE : {%d}]\n[start_add : {%p}]\n[ALLOTED_MEM [%d] : {%lu}]\n",list->type, tmplist->start_add, i, tmplist->alloted_mem[i]);
+		// printf("\nassignBlock\n[TYPE : {%d}]\n[start_add : {%p}]\n[ALLOTED_MEM [%d] : {%lu}]\n",list->type, tmplist->start_add, i, tmplist->alloted_mem[i]);
 		return (tmplist->start_add);
 }

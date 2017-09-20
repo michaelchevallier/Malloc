@@ -26,90 +26,154 @@ int main(void)
 	int *i;
 	int *j;
 
-	a = malloc(1 * sizeof(int));
 	show_alloc_mem();
-	printf("%p\n", a);
 
-	b = malloc(10 * sizeof(int));
+	a = malloc(1);
 	show_alloc_mem();
-	printf("%p\n", b);
+	printf("%p\n\n", a);
 
-	c = malloc(100* sizeof(int));
+	b = malloc(10);
 	show_alloc_mem();
-	printf("%p\n", c);
+	printf("%p\n\n", b);
 
-	d = malloc(1000* sizeof(int));
+	c = malloc(100);
 	show_alloc_mem();
-	printf("%p\n", d);
+	printf("%p\n\n", c);
 
-	e = malloc(1000* sizeof(int));
+	d = malloc(1000);
 	show_alloc_mem();
-	printf("%p\n", e);
+	printf("%p\n\n", d);
 
-	f = malloc(10000* sizeof(int));
+	e = malloc(1000);
 	show_alloc_mem();
-	printf("%p\n", f);
+	printf("%p\n\n", e);
 
-	g = malloc(10000* sizeof(int));
+	f = malloc(10000);
 	show_alloc_mem();
-	printf("%p\n", g);
+	printf("%p\n\n", f);
 
-	h = malloc(10000* sizeof(int));
+	g = malloc(10000);
 	show_alloc_mem();
-	printf("%p\n", h);
+	printf("%p\n\n", g);
 
-	i = malloc(100000* sizeof(int));
+	h = malloc(10000);
 	show_alloc_mem();
-	printf("%p\n", i);
+	printf("%p\n\n", h);
 
-	j = malloc(1000000* sizeof(int));
+	i = malloc(100000);
 	show_alloc_mem();
-	printf("%p\n", j);
-	// printf("\na:");
-	// realloc(a, 10);
-	// printf("\nb:");
-	// realloc(b, 100);
-	// printf("\nc:");
-	// realloc(c, 1000);
-	// printf("\nd:");
-	// realloc(d, 10000);
-	// printf("\ne:");
-	// realloc(e, 10000);
-	// printf("\nf:");
-	// realloc(f, 100000);
-	// printf("\ng:");
-	// realloc(g, 100000);
-	// printf("\nh:");
-	// realloc(h, 100000);
-	// printf("\ni:");
-	// realloc(i, 1000000);
-	// printf("\nj:");
-	// realloc(j, 10000000);
-	// printf("\n");
+	printf("%p\n\n", i);
+
+	j = malloc(1000000);
+	show_alloc_mem();
+	printf("%p\n\n", j);
+
+	printf ("############################### REALLOC ##########################\n\n");
+
+	printf("REALLOCING : [a] : %p => 10\n", a);
+	a = realloc(a, 10);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("REALLOCING : [b] : %p => 100\n", b);
+	b = realloc(b, 100);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("REALLOCING : [c] : %p => 1000\n", c);
+	c = realloc(c, 1000);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("REALLOCING : [d] : %p => 10000\n", d);
+	d = realloc(d, 10000);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("REALLOCING : [e] : %p => 10000\n", e);
+	e = realloc(e, 10000);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("REALLOCING : [f] : %p => 100000\n", f);
+	f = realloc(f, 100000);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("REALLOCING : [g] : %p => 100000\n", g);
+	show_alloc_mem();
+	g = realloc(g, 100000);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("REALLOCING : [h] : %p => 100000\n", h);
+	h = realloc(h, 100000);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("REALLOCING : [i] : %p => 1000000\n", i);
+	i = realloc(i, 1000000);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("REALLOCING : [j] : %p => 10000000\n", j);
+	j = realloc(j, 10000000);
+	show_alloc_mem();
+	printf("\n\n");
 
 
-	// show_alloc_mem();
+	printf("###################################### FREE $$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
 
-	// printf("a : ");
-	// free(a);
-	// printf("\nb : ");
-	// free(b);
-	// printf("\nc : ");
-	// free(c);
-	// printf("\nd : ");
-	// free(d);
-	// printf("\ne : ");
-	// free(e);
-	// printf("\nf : ");
-	// free(f);
-	// printf("\ng : ");
-	// free(g);
-	// printf("\nh : ");
-	// free(h);
-	// printf("\ni : ");
-	// free(i);
-	// printf("\nj : ");
-	// free(j);
+	printf("FREEING : [a] : %p\n", a);
+	free(a);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("FREEING : [b] : %p\n", b);
+	free(b);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("FREEING : [c] : %p\n", c);
+	free(c);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("FREEING : [d] : %p\n", d);
+	free(d);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("FREEING : [e] : %p\n", e);
+	free(e);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("FREEING : [f] : %p\n", f);
+	free(f);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("FREEING : [g] : %p\n", g);
+	free(g);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("FREEING : [h] : %p\n", h);
+	free(h);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("FREEING : [i] : %p\n", i);
+	free(i);
+	show_alloc_mem();
+	printf("\n\n");
+
+	printf("FREEING : [j] : %p\n", j);
+	free(j);
+	show_alloc_mem();
+	printf("\n\n");
+
 	// printf("pagesize %d \n", getpagesize());
 	// printf("limit %d \n", getrlimit(RLIMIT_DATA, &r1));
 	return (0);

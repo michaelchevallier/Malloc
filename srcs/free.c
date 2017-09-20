@@ -46,13 +46,14 @@ static void		freeAndDestroy(t_memblocklist *list)
 	}
 	if (list->type == SMALL)
 	{
-		munmap(list->start_add, SMALL);
+		munmap(list->start_add, SMALLSIZE);
 		removeFromList(list, g_fmem->smalllist);
 	}
 	if (list->type == LARGE)
 	{
 		munmap(list->start_add, list->alloted_mem[0]);
-		removeFromList(list, g_fmem->largelist);
+		if (!(isSamePtr((void *)list, (void *)(g_fmem->largelist))))
+			removeFromList(list, g_fmem->largelist);
 	}
 }
 
@@ -67,15 +68,15 @@ static void		*freeptr(t_memblocklist *list, int i)
 	while (++j < BLOCKDIV)
 	{
 		if (list->alloted_mem[j] != 0 && list->type != LARGE)
-			return ((void *)-1);
+			return (NULL);
 	}
 	if ((isSamePtr((void *)list, (void *)g_fmem->tinylist) ||
 		isSamePtr((void *)list, (void *)g_fmem->smalllist)))
-		return ((void *) -1);
+		return (NULL);
 	else if (isSamePtr((void *)list, (void *)(g_fmem->largelist)))
 		list->alloted_mem[i] = 0;
 	freeAndDestroy(list);
-	return ((void *)0);
+	return (NULL);
 }
 
 static void		*findAddrInList(void *ptr, t_memblocklist *list)
@@ -106,6 +107,7 @@ static void		*findAddrInList(void *ptr, t_memblocklist *list)
 			return (freeptr(tmplist, 0));
 		tmplist = tmplist->next;
 	}
+printf("YOOOOOOOOOOOOLLLLLLLLLLLLLLLLL##########################\n");
 	return ((void *)-1);
 }
 
@@ -113,9 +115,12 @@ void		free(void *ptr)
 {
 	printf("**************************FREE***********************\n");
 	if (ptr == NULL)
+	{
+		printf(" ***************** RECEIVED POINTER IS NULL ****************** \n");
 		return ;
+	}
 
-	findAddrInList(ptr, g_fmem->largelist);
-	findAddrInList(ptr, g_fmem->smalllist);
-	findAddrInList(ptr, g_fmem->tinylist);
+	if (findAddrInList(ptr, g_fmem->largelist) == (void *) -1)
+		if (findAddrInList(ptr, g_fmem->smalllist) == (void *)-1)
+			findAddrInList(ptr, g_fmem->tinylist);
 }

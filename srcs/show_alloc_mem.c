@@ -12,18 +12,20 @@
 
 #include "../includes/malloc.h"
 
-static void				printmeminfo(t_memblocklist *list)
+static size_t				printmeminfo(t_memblocklist *list)
 {
 	int					i;
+	size_t				totalmem;
 
 	i = 0;
+	totalmem = 0;
 // ft_putstr("\nprintmeminfo\n");
 	if (list->type == TINY)
-		ft_putstr("TINY : ");
+		ft_putstr("TINY : 0x");
 	else if (list->type == SMALL)
-		ft_putstr("SMALL : ");
+		ft_putstr("SMALL : 0x");
 	else
-		ft_putstr("LARGE : ");
+		ft_putstr("LARGE : 0x");
 	// printf("%p\n",list->start_add);
 	putoabase((uintmax_t)list->start_add, 16);
 	ft_putchar('\n');
@@ -31,15 +33,16 @@ static void				printmeminfo(t_memblocklist *list)
 	{
 		if (list->alloted_mem[i] > 0)
 		{
+			totalmem += list->alloted_mem[i];
 	// printf("%p\n", list->start_add);
+			ft_putstr("0x");
 			if (list->type == TINY)
 				putoabase((uintmax_t)list->start_add + (i * TBLOCK), 16);
 			else if (list->type == SMALL)
 				putoabase((uintmax_t)list->start_add + (i * SBLOCK), 16);
 			else
 				putoabase((uintmax_t)list->start_add, 16);
-			ft_putstr(" - ");
-
+			ft_putstr(" - 0x");
 	// printf("%p\n", list->start_add);
 			if (list->type == TINY)
 				putoabase((uintmax_t)list->start_add + (i * TBLOCK) + list->alloted_mem[i], 16);
@@ -53,6 +56,7 @@ static void				printmeminfo(t_memblocklist *list)
 		}
 		i++;
 	}
+	return (totalmem);
 // ft_putstr("\nprintmeminfo -> return\n");
 }
 
@@ -101,9 +105,9 @@ static void				*findPossibleAddress(t_memblocklist *list, void *addr)
 	returnedlist = NULL;
 	while (tmplist)
 	{
-		if (list->start_add > addr && list->start_add < currentsmall)
+		if (tmplist->start_add > addr && tmplist->start_add < currentsmall)
 		{
-			currentsmall = list->start_add;
+			currentsmall = tmplist->start_add;
 			returnedlist = tmplist;
 		}
 		tmplist = tmplist->next;
@@ -117,21 +121,29 @@ void					show_alloc_mem()
 	int					i;
 	void				*prevaddr;
 	t_memblocklist		*list;
+	size_t				totalmem;
 
 	i = 0;
+	totalmem = 0;
 	prevaddr = (void *)0;
-ft_putchar('\n');
-	while (i == 0)
+	if (g_fmem != NULL)
 	{
-		if ((list = compareAddresses(
-			findPossibleAddress(g_fmem->tinylist, prevaddr),
-			findPossibleAddress(g_fmem->smalllist, prevaddr),
-			findPossibleAddress(g_fmem->largelist, prevaddr))) == NULL)
-			i = 1;
-		else
+		while (i == 0)
 		{
-			printmeminfo(list);
-			prevaddr = list->start_add;
+			if ((list = compareAddresses(
+				findPossibleAddress(g_fmem->tinylist, prevaddr),
+				findPossibleAddress(g_fmem->smalllist, prevaddr),
+				findPossibleAddress(g_fmem->largelist, prevaddr))) == NULL)
+				i = 1;
+			else
+			{
+				totalmem += printmeminfo(list);
+				prevaddr = list->start_add;
+			}
 		}
+		ft_putstr("Total : ");
+		ft_sputnbr(totalmem);
+		ft_putendl(" octets");
 	}
+
 }
