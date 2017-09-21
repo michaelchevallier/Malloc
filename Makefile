@@ -6,7 +6,7 @@
 #    By: mchevall <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/13 15:49:31 by mchevall          #+#    #+#              #
-#    Updated: 2017/09/21 18:23:00 by mchevall         ###   ########.fr        #
+#    Updated: 2017/09/21 18:53:51 by mchevall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ all:
 
 $(NAME): $(O_FILES)
 	gcc -shared -o $@ $^ libft/libft.a
+	@rm -rf $(LINKNAME)
 	ln -s $(NAME) $(LINKNAME)
 
 $(O_FILES): $(O_DIR)%.o: $(C_DIR)%.c
