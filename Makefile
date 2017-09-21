@@ -6,7 +6,7 @@
 #    By: mchevall <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/13 15:49:31 by mchevall          #+#    #+#              #
-#    Updated: 2017/09/20 13:10:08 by mchevall         ###   ########.fr        #
+#    Updated: 2017/09/21 13:02:59 by mchevall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,10 +71,10 @@ fclean: clean
 
 re: fclean all
 
-test: $(NAME)
-	$(CC) srcs/$(MAIN) $(NAME)
+##test: $(NAME)
+##	$(CC) srcs/$(MAIN) $(NAME)
 
-testclean: fclean
-	rm -rf a.out
+##testclean: fclean
+##	rm -rf a.out
 
 .PHONY: re clean fclean malloc all test testclean

@@ -20,7 +20,7 @@ int		createNewMemBlock(t_memblocklist *list, t_blocktype type)
 	tmplist = list;
 	newBlock = (t_memblocklist *)mmap(0, sizeof(t_memblocklist),
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
-printf("############################################### DEBUG newBlock: [%p]\n", newBlock);
+// printf("############################################### DEBUG newBlock: [%p]\n", newBlock);
 	if (newBlock == MAP_FAILED)
 		return (-1);
 	if (type == TINY && setTiny(newBlock) == -1)

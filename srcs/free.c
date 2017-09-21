@@ -69,9 +69,8 @@ static void		freeAndDestroy(t_memblocklist *list)
 	if (list->type == LARGE)
 	{
 		munmap(list->start_add, list->alloted_mem[0]);
-		// if (isSamePtr((void *)list, (void *)(g_fmem->largelist)))
-			// return ;
-		g_fmem->largelist = removeFromList(list, g_fmem->largelist);
+		if (list->next != NULL)
+			g_fmem->largelist = removeFromList(list, g_fmem->largelist);
 	}
 	// show_alloc_mem();
 

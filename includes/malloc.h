@@ -32,7 +32,7 @@
 
 typedef enum				e_blocktype
 {
-							TINY = TINYSIZE,
+							TINY,
 							SMALL,
 							LARGE
 }							t_blocktype;

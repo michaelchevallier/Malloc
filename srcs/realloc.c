@@ -78,7 +78,7 @@ static void		*tryrealloc(t_memblocklist *list, int i, size_t size)
 			return (NULL);
 	// show_alloc_mem();
 		ft_memcpy(ptr, (const void *)list->start_add, cpysize);
-	printf("############################################# DEBUG : [ %p ] [ %p ]\n", ptr, list->start_add);
+	// printf("############################################# DEBUG : [ %p ] [ %p ]\n", ptr, list->start_add);
 		free(list->start_add);
 	}
 	return (ptr);
@@ -111,7 +111,7 @@ static void		*findAddrInList(void *ptr, t_memblocklist *list, size_t size)
 			return (tryrealloc(tmplist, 0, size));
 		tmplist = tmplist->next;
 	}
-	printf("############################################### DEBUG pas trouver\n");
+	// printf("############################################### DEBUG pas trouver\n");
 	return ((void *)-1);
 }
 
@@ -125,7 +125,7 @@ void						*realloc(void *ptr, size_t size)
 	if((rptr = findAddrInList(ptr, g_fmem->largelist, size)) == (void *)-1)
 		if((rptr = findAddrInList(ptr, g_fmem->smalllist, size)) == (void *)-1)
 			rptr = findAddrInList(ptr, g_fmem->tinylist, size);
-	printf("\nreturned pointer : [%p]", rptr);
+	// printf("\nreturned pointer : [%p]", rptr);
 	if (rptr == (void *)-1)
 		return (NULL);
 	return (rptr);
