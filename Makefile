@@ -29,16 +29,17 @@ O_DIR = obj/
 C_FILES = malloc.c
 C_FILES += free.c
 C_FILES += realloc.c
-C_FILES += mapFirstMemBlocks.c
-C_FILES += initMemBlockList.c
-C_FILES += setTiny.c
-C_FILES += setSmall.c
-C_FILES += setLarge.c
-C_FILES += assignBlock.c
-C_FILES += createNewMemBlock.c
-C_FILES += isSamePtr.c
+C_FILES += map_first_memblocks.c
+C_FILES += init_memblock_list.c
+C_FILES += set_tiny.c
+C_FILES += set_small.c
+C_FILES += set_large.c
+C_FILES += assign_block.c
+C_FILES += create_new_memblock.c
+C_FILES += is_same_ptr.c
 C_FILES += putoabase.c
 C_FILES += show_alloc_mem.c
+C_FILES += print_mem_info.c
 
 O_FILES = $(addprefix $(O_DIR),$(C_FILES:.c=.o))
 
@@ -71,10 +72,10 @@ fclean: clean
 
 re: fclean all
 
-##test: $(NAME)
-##	$(CC) srcs/$(MAIN) $(NAME)
+test: $(NAME)
+	$(CC) srcs/$(MAIN) $(NAME)
 
-##testclean: fclean
-##	rm -rf a.out
+testclean: fclean
+	rm -rf a.out
 
 .PHONY: re clean fclean malloc all test testclean

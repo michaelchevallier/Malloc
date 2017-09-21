@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initMemBlockList.c                                 :+:      :+:    :+:   */
+/*   is_same_ptr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mchevall <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/14 13:40:11 by mchevall          #+#    #+#             */
-/*   Updated: 2017/09/14 13:40:18 by mchevall         ###   ########.fr       */
+/*   Created: 2017/09/18 15:15:10 by mchevall          #+#    #+#             */
+/*   Updated: 2017/09/18 15:16:05 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-int		initMemBlockList(t_memblocklist *list, t_blocktype type)
+int		is_same_ptr(void *ptr1, void *ptr2)
 {
-	if (type == TINY && setTiny(list) == -1)
-		return (-1);
-	else if (type == SMALL && setSmall(list) == -1)
-		return (-1);
-	else if (type == LARGE && setLarge(list, 0) == -1)
-		return (-1);
+	if (ptr1 == ptr2)
+		return (1);
 	else
 		return (0);
-
 }

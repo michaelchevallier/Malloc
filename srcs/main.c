@@ -176,6 +176,9 @@ int main(void)
 	show_alloc_mem();
 	printf("\n\n");
 
+	printf("\n\n                                                  ######################################  END FREE ##########################################       \n\n");
+
+
 		a = malloc(1);
 	show_alloc_mem();
 	// printf("%p\n\n                                                  ######################################                                        \n\n", a);

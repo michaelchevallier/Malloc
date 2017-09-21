@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Malloc.h                                           :+:      :+:    :+:   */
+/*   malloc.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mchevall <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -22,7 +22,6 @@
 
 # define BLOCKDIV 100
 # define PAGESIZE getpagesize()
-
 # define TINYSIZE (size_t)(10 * PAGESIZE)
 # define SMALLSIZE (size_t)(100 * PAGESIZE)
 # define TBLOCK ((TINYSIZE) / (100))
@@ -32,12 +31,10 @@
 
 typedef enum				e_blocktype
 {
-							TINY,
-							SMALL,
-							LARGE
+	TINY,
+	SMALL,
+	LARGE
 }							t_blocktype;
-
-/** type: TINY = 0 || SMALL = 1 || LARGE = 2 **/
 
 typedef struct				s_memblocklist
 {
@@ -54,23 +51,23 @@ typedef struct				s_fmemblocks
 	t_memblocklist			*largelist;
 }							t_fmemblocks;
 
-
 void						free(void *ptr);
 void						*malloc(size_t size);
 void						*realloc(void *ptr, size_t size);
 void						show_alloc_mem(void);
-t_fmemblocks				*mapFirstMemBlocks(void);
-int							initMemBlockList(t_memblocklist *list, t_blocktype type);
-int							setTiny(t_memblocklist *list);
-int							setSmall(t_memblocklist *list);
-int							setLarge(t_memblocklist *list, size_t size);
-void						*assignBlock(t_memblocklist *list, size_t size);
-int							createNewMemBlock(t_memblocklist *list, t_blocktype type);
-void						findPtr(void *ptr);
-int							isSamePtr(void *ptr1, void *ptr2);
+t_fmemblocks				*map_first_memblocks(void);
+int							init_memblock_list(t_memblocklist *list,
+	t_blocktype type);
+int							set_tiny(t_memblocklist *list);
+int							set_small(t_memblocklist *list);
+int							set_large(t_memblocklist *list, size_t size);
+void						*assign_block(t_memblocklist *list, size_t size);
+int							create_new_memblock(t_memblocklist *list,
+	t_blocktype type);
+int							is_same_ptr(void *ptr1, void *ptr2);
 void						putoabase(uintmax_t n, size_t base);
-// t_block				initBlock(t_block block, int i, t_memblock *memblock);
+size_t						printmeminfo(t_memblocklist *list);
+
 
 extern t_fmemblocks		*g_fmem;
-
 #endif

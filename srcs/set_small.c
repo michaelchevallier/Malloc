@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setSmall.c                                         :+:      :+:    :+:   */
+/*   set_small.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mchevall <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "../includes/malloc.h"
 
-int				setSmall(t_memblocklist *list)
+int				set_small(t_memblocklist *list)
 {
 	int			i;
 

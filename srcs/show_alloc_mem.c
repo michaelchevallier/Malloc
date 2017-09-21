@@ -12,54 +12,6 @@
 
 #include "../includes/malloc.h"
 
-static size_t				printmeminfo(t_memblocklist *list)
-{
-	int					i;
-	size_t				totalmem;
-
-	i = 0;
-	totalmem = 0;
-// ft_putstr("\nprintmeminfo\n");
-	if (list->type == TINY)
-		ft_putstr("TINY : 0x");
-	else if (list->type == SMALL)
-		ft_putstr("SMALL : 0x");
-	else
-		ft_putstr("LARGE : 0x");
-	// printf("%p\n",list->start_add);
-	putoabase((uintmax_t)list->start_add, 16);
-	ft_putchar('\n');
-	while (i < BLOCKDIV)
-	{
-		if (list->alloted_mem[i] > 0)
-		{
-			totalmem += list->alloted_mem[i];
-	// printf("%p\n", list->start_add);
-			ft_putstr("0x");
-			if (list->type == TINY)
-				putoabase((uintmax_t)list->start_add + (i * TBLOCK), 16);
-			else if (list->type == SMALL)
-				putoabase((uintmax_t)list->start_add + (i * SBLOCK), 16);
-			else
-				putoabase((uintmax_t)list->start_add, 16);
-			ft_putstr(" - 0x");
-	// printf("%p\n", list->start_add);
-			if (list->type == TINY)
-				putoabase((uintmax_t)list->start_add + (i * TBLOCK) + list->alloted_mem[i], 16);
-			else if (list->type == SMALL)
-				putoabase((uintmax_t)list->start_add + (i * SBLOCK) + list->alloted_mem[i], 16);
-			else
-				putoabase((uintmax_t)list->start_add + list->alloted_mem[i], 16);
-			ft_putstr(" : ");
-			ft_sputnbr(list->alloted_mem[i]);
-			ft_putendl(" octets");
-		}
-		i++;
-	}
-	return (totalmem);
-// ft_putstr("\nprintmeminfo -> return\n");
-}
-
 static t_memblocklist	*compareAddresses(t_memblocklist *list1,
 	t_memblocklist *list2, t_memblocklist *list3)
 {
