@@ -117,15 +117,16 @@ static void		*findAddrInList(void *ptr, t_memblocklist *list, size_t size)
 
 void						*realloc(void *ptr, size_t size)
 {
-	void		*returnedpointer;
+	void		*rptr;
 
-
+	rptr = (void *)-1;
 	if (ptr == NULL)
 		return (NULL);
-	returnedpointer = findAddrInList(ptr, g_fmem->largelist, size);
-	returnedpointer = findAddrInList(ptr, g_fmem->smalllist, size);
-	returnedpointer = findAddrInList(ptr, g_fmem->tinylist, size);
-	if (returnedpointer == (void *)-1)
+	if((rptr = findAddrInList(ptr, g_fmem->largelist, size)) == (void *)-1)
+		if((rptr = findAddrInList(ptr, g_fmem->smalllist, size)) == (void *)-1)
+			rptr = findAddrInList(ptr, g_fmem->tinylist, size);
+	printf("\nreturned pointer : [%p]", rptr);
+	if (rptr == (void *)-1)
 		return (NULL);
-	return (returnedpointer);
+	return (rptr);
 }

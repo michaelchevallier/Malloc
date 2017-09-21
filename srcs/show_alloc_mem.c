@@ -100,6 +100,7 @@ static void				*findPossibleAddress(t_memblocklist *list, void *addr)
 	void				*currentsmall;
 
 // ft_putstr("\nfindPossibleAddress\n");
+// printf("findPossibleAddress : [%p]\n", list);
 	tmplist = list;
 	currentsmall = (void *)-1;
 	returnedlist = NULL;

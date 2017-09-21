@@ -100,6 +100,7 @@ int main(void)
 	printf("REALLOCING : [f] : %p => 100000\n", f);
 	f = realloc(f, 100000);
 	show_alloc_mem();
+
 	printf("\n\n");
 
 	printf("REALLOCING : [g] : %p => 100000\n", g);
@@ -126,55 +127,55 @@ int main(void)
 
 	printf("###################################### FREE $$$$$$$$$$$$$$$$$$$$$$$$$ \n\n");
 
-	// printf("FREEING : [a] : %p\n", a);
-	// free(a);
-	// show_alloc_mem();
-	// printf("\n\n");
+	printf("FREEING : [a] : %p\n", a);
+	free(a);
+	show_alloc_mem();
+	printf("\n\n");
 
-	// printf("FREEING : [b] : %p\n", b);
-	// free(b);
-	// show_alloc_mem();
-	// printf("\n\n");
+	printf("FREEING : [b] : %p\n", b);
+	free(b);
+	show_alloc_mem();
+	printf("\n\n");
 
-	// printf("FREEING : [c] : %p\n", c);
-	// free(c);
-	// show_alloc_mem();
-	// printf("\n\n");
+	printf("FREEING : [c] : %p\n", c);
+	free(c);
+	show_alloc_mem();
+	printf("\n\n");
 
-	// printf("FREEING : [d] : %p\n", d);
-	// free(d);
-	// show_alloc_mem();
-	// printf("\n\n");
+	printf("FREEING : [d] : %p\n", d);
+	free(d);
+	show_alloc_mem();
+	printf("\n\n");
 
-	// printf("FREEING : [e] : %p\n", e);
-	// free(e);
-	// show_alloc_mem();
-	// printf("\n\n");
+	printf("FREEING : [e] : %p\n", e);
+	free(e);
+	show_alloc_mem();
+	printf("\n\n");
 
-	// printf("FREEING : [f] : %p\n", f);
-	// free(f);
-	// show_alloc_mem();
-	// printf("\n\n");
+	printf("FREEING : [f] : %p\n", f);
+	free(f);
+	show_alloc_mem();
+	printf("\n\n");
 
-	// printf("FREEING : [g] : %p\n", g);
-	// free(g);
-	// show_alloc_mem();
-	// printf("\n\n");
+	printf("FREEING : [g] : %p\n", g);
+	free(g);
+	show_alloc_mem();
+	printf("\n\n");
 
-	// printf("FREEING : [h] : %p\n", h);
-	// free(h);
-	// show_alloc_mem();
-	// printf("\n\n");
+	printf("FREEING : [h] : %p\n", h);
+	free(h);
+	show_alloc_mem();
+	printf("\n\n");
 
-	// printf("FREEING : [i] : %p\n", i);
-	// free(i);
-	// show_alloc_mem();
-	// printf("\n\n");
+	printf("FREEING : [i] : %p\n", i);
+	free(i);
+	show_alloc_mem();
+	printf("\n\n");
 
-	// printf("FREEING : [j] : %p\n", j);
-	// free(j);
-	// show_alloc_mem();
-	// printf("\n\n");
+	printf("FREEING : [j] : %p\n", j);
+	free(j);
+	show_alloc_mem();
+	printf("\n\n");
 
 	printf("sizeof(t_memblocklist): %lu\n", sizeof(t_memblocklist));
 	// printf("pagesize %d \n", getpagesize());
