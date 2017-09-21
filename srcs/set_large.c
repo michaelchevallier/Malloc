@@ -18,8 +18,8 @@ int		set_large(t_memblocklist *list, size_t size)
 
 	i = 0;
 	if (size != 0)
-	list->start_add = (void *)mmap(0, size,
-		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
+		list->start_add = (void *)mmap(0, size,
+		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
 	if (list->start_add == MAP_FAILED)
 		return (-1);
 	list->type = LARGE;

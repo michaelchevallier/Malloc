@@ -12,12 +12,14 @@
 
 #include "../includes/malloc.h"
 
-static void					second_part(t_memblocklist *list, int i)
+static void		second_part(t_memblocklist *list, int i)
 {
 	if (list->type == TINY)
-		putoabase((uintmax_t)list->start_add + (i * TBLOCK) + list->alloted_mem[i], 16);
+		putoabase((uintmax_t)list->start_add + (i * TBLOCK) +
+			list->alloted_mem[i], 16);
 	else if (list->type == SMALL)
-		putoabase((uintmax_t)list->start_add + (i * SBLOCK) + list->alloted_mem[i], 16);
+		putoabase((uintmax_t)list->start_add + (i * SBLOCK) +
+			list->alloted_mem[i], 16);
 	else
 		putoabase((uintmax_t)list->start_add + list->alloted_mem[i], 16);
 	ft_putstr(" : ");
@@ -25,7 +27,7 @@ static void					second_part(t_memblocklist *list, int i)
 	ft_putendl(" octets");
 }
 
-static void					first_part(t_memblocklist *list, int i)
+static void		first_part(t_memblocklist *list, int i)
 {
 	ft_putstr("0x");
 	if (list->type == TINY)
@@ -37,7 +39,7 @@ static void					first_part(t_memblocklist *list, int i)
 	ft_putstr(" - 0x");
 }
 
-static void					prequel(t_memblocklist *list)
+static void		prequel(t_memblocklist *list)
 {
 	if (list->type == TINY)
 		ft_putstr("TINY : 0x");
@@ -45,19 +47,17 @@ static void					prequel(t_memblocklist *list)
 		ft_putstr("SMALL : 0x");
 	else
 		ft_putstr("LARGE : 0x");
-	// printf("%p\n",list->start_add);
 	putoabase((uintmax_t)list->start_add, 16);
 	ft_putchar('\n');
 }
 
-size_t				printmeminfo(t_memblocklist *list)
+size_t			printmeminfo(t_memblocklist *list)
 {
-	int					i;
-	size_t				totalmem;
+	int			i;
+	size_t		totalmem;
 
 	i = 0;
 	totalmem = 0;
-// ft_putstr("\nprintmeminfo\n");
 	prequel(list);
 	while (i < BLOCKDIV)
 	{
@@ -65,12 +65,9 @@ size_t				printmeminfo(t_memblocklist *list)
 		{
 			totalmem += list->alloted_mem[i];
 			first_part(list, i);
-	// printf("%p\n", list->start_add);
-	// printf("%p\n", list->start_add);
 			second_part(list, i);
 		}
 		i++;
 	}
 	return (totalmem);
-// ft_putstr("\nprintmeminfo -> return\n");
 }

@@ -6,7 +6,7 @@
 #    By: mchevall <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/13 15:49:31 by mchevall          #+#    #+#              #
-#    Updated: 2017/09/21 13:02:59 by mchevall         ###   ########.fr        #
+#    Updated: 2017/09/21 18:23:00 by mchevall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,14 @@ ifeq ($(HOSTTYPE),)
 endif
 
 NAME = libft_malloc_$(HOSTTYPE).so
-LINKNAME = libft_malloc
+LINKNAME = libft_malloc.so
 PRINTF = libft/
 PRINTFLIB = libft/libft.a
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
 
+INC = includes/malloc.h
 H_DIR = includes/
 C_DIR = srcs/
 O_DIR = obj/
@@ -50,16 +51,14 @@ all:
 	make $(NAME)
 
 $(NAME): $(O_FILES)
-	ar rc $@ $^
-	libtool -static -o $@ $@ libft/libft.a
-	ranlib $@
+	gcc -shared -o $@ $^ libft/libft.a
 	ln -s $(NAME) $(LINKNAME)
 
 $(O_FILES): $(O_DIR)%.o: $(C_DIR)%.c
 	@mkdir $(O_DIR) 2>/dev/null ||echo "" > /dev/null
 	$(CC) $(FLAGS) -o $@ -c $<
 
-libft:
+$(LIBFT):
 	@make -C $(PRINTF) all
 
 clean:
@@ -72,10 +71,4 @@ fclean: clean
 
 re: fclean all
 
-test: $(NAME)
-	$(CC) srcs/$(MAIN) $(NAME)
-
-testclean: fclean
-	rm -rf a.out
-
-.PHONY: re clean fclean malloc all test testclean
+.PHONY: re clean fclean malloc all

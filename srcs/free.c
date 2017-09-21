@@ -12,10 +12,9 @@
 
 #include "../includes/malloc.h"
 
-static t_memblocklist	*removeFromList(t_memblocklist *list,
+static t_memblocklist	*remove_from_list(t_memblocklist *list,
 	t_memblocklist *o_list)
 {
-	// printf("************** REMOVEFROMLIST *********************** \n");
 	t_memblocklist *tmplist;
 	t_memblocklist *tmplist2;
 
@@ -23,59 +22,43 @@ static t_memblocklist	*removeFromList(t_memblocklist *list,
 	tmplist2 = NULL;
 	while (tmplist != NULL)
 	{
-	// printf("\n yolo : [%p ] [ %p ] , [ %p ]        {[ %p ],  [ %p ]}\n", tmplist, tmplist2, list, g_fmem->smalllist, g_fmem->tinylist);
 		if (is_same_ptr((void *)tmplist, (void *)list))
 		{
-	// printf("#######################################################################DEBUG [ %p ]\n", list);
-	// printf("hi1\n");
 			if (tmplist2 == NULL)
-			{
-				// printf("hi2\n");
-				// printf("YOO : [%p]  [%p] \n", o_list, tmplist->next);
 				o_list = tmplist->next;
-				// printf("YOO2 : [%p]  [%p] \n", o_list, g_fmem->largelist);
-			}
 			else
-			{
-				// printf("hi3\n");
 				tmplist2->next = tmplist->next;
-			}
 			munmap(tmplist, sizeof(t_memblocklist));
-	// printf("hi4\n");
 			return (o_list);
 		}
 		tmplist2 = tmplist;
 		tmplist = tmplist->next;
 	}
-	return(o_list);
+	return (o_list);
 }
 
-static void		freeAndDestroy(t_memblocklist *list)
+static void				free_and_destroy(t_memblocklist *list)
 {
-// printf("************** FREEANDDESTROY *********************** \n");
 	if (list->type == TINY)
 	{
 		munmap(list->start_add, TINYSIZE);
-		g_fmem->tinylist = removeFromList(list, g_fmem->tinylist);
+		g_fmem->tinylist = remove_from_list(list, g_fmem->tinylist);
 	}
 	if (list->type == SMALL)
 	{
 		munmap(list->start_add, SMALLSIZE);
-		g_fmem->smalllist = removeFromList(list, g_fmem->smalllist);
+		g_fmem->smalllist = remove_from_list(list, g_fmem->smalllist);
 	}
 	if (list->type == LARGE)
 	{
 		munmap(list->start_add, list->alloted_mem[0]);
 		if (list->next != NULL)
-			g_fmem->largelist = removeFromList(list, g_fmem->largelist);
+			g_fmem->largelist = remove_from_list(list, g_fmem->largelist);
 	}
-// show_alloc_mem();
-
 }
 
-static void		*freeptr(t_memblocklist *list, int i)
+static void				*freeptr(t_memblocklist *list, int i)
 {
-// printf("************** FREEPTR *********************** \n");
 	int				j;
 
 	j = -1;
@@ -91,13 +74,12 @@ static void		*freeptr(t_memblocklist *list, int i)
 		return (NULL);
 	else
 		list->alloted_mem[i] = 0;
-	freeAndDestroy(list);
+	free_and_destroy(list);
 	return (NULL);
 }
 
-static void		*findAddrInList(void *ptr, t_memblocklist *list)
+static void				*find_addr_inlist(void *ptr, t_memblocklist *list)
 {
-// printf("************** FINDADDRINLIST *********************** \n");
 	t_memblocklist	*tmplist;
 	int				i;
 
@@ -107,37 +89,26 @@ static void		*findAddrInList(void *ptr, t_memblocklist *list)
 	{
 		while (i < BLOCKDIV && tmplist->type != LARGE)
 		{
-			if (tmplist->type == TINY)
-			{
-				if (is_same_ptr(ptr, (void *)tmplist->TBLOCKADDR))
-					return (freeptr(tmplist, i));
-			}
-			else if ((tmplist->type) == SMALL)
-			{
-				if (is_same_ptr(ptr, (void *)tmplist->SBLOCKADDR))
-					return (freeptr(tmplist, i));
-			}
+			if (tmplist->type == TINY &&
+				is_same_ptr(ptr, (void *)tmplist->TBLOCKADDR))
+				return (freeptr(tmplist, i));
+			else if ((tmplist->type) == SMALL &&
+				is_same_ptr(ptr, (void *)tmplist->SBLOCKADDR))
+				return (freeptr(tmplist, i));
 			i++;
 		}
 		if (is_same_ptr(ptr, (void *)tmplist->start_add))
 			return (freeptr(tmplist, 0));
 		tmplist = tmplist->next;
 	}
-// printf("############################################### DEBuG pas trouver free\n");
 	return ((void *)-1);
 }
 
-void		free(void *ptr)
+void					free(void *ptr)
 {
-	// printf("**************************FREE***********************\n");
 	if (ptr == NULL)
-	{
-		printf(" ***************** RECEIVED POINTER IS NULL ****************** \n");
 		return ;
-	}
-
-	if (findAddrInList(ptr, g_fmem->largelist) == (void *) -1)
-		if (findAddrInList(ptr, g_fmem->smalllist) == (void *)-1)
-			findAddrInList(ptr, g_fmem->tinylist);
-	// show_alloc_mem();
+	if (find_addr_inlist(ptr, g_fmem->largelist) == (void *)-1)
+		if (find_addr_inlist(ptr, g_fmem->smalllist) == (void *)-1)
+			find_addr_inlist(ptr, g_fmem->tinylist);
 }

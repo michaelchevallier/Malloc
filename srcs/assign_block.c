@@ -12,7 +12,7 @@
 
 #include "../includes/malloc.h"
 
-int				largeSpecialCase(t_memblocklist *list, size_t size)
+int				large_special_case(t_memblocklist *list, size_t size)
 {
 	if (set_large(list, size) == -1)
 		return (-1);
@@ -22,38 +22,29 @@ int				largeSpecialCase(t_memblocklist *list, size_t size)
 
 void			*assign_block(t_memblocklist *list, size_t size)
 {
-		int		i;
-		t_memblocklist *tmplist;
+	int				i;
+	t_memblocklist	*tmplist;
 
-		i = 0;
-		tmplist = list;
-	// printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ DEBUG assign_block: %lu { %p }\n", tmplist->alloted_mem[i], tmplist->start_add);
-		while (tmplist->alloted_mem[i] != 0)
+	i = 0;
+	tmplist = list;
+	while (tmplist->alloted_mem[i] != 0)
+	{
+		i++;
+		if (i == BLOCKDIV || list->type == LARGE)
 		{
-	// printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ DEBUG assign_block: %lu { %p }\n", tmplist->alloted_mem[i], tmplist->start_add);
-			i++;
-			if (i == BLOCKDIV || list->type == LARGE)
-			{
-				if (tmplist->next == NULL)
-					if (create_new_memblock(list, tmplist->type) == -1)
-						return (NULL);
-					tmplist = tmplist->next;
-				i = 0;
-			}
+			if (tmplist->next == NULL)
+				if (create_new_memblock(list, tmplist->type) == -1)
+					return (NULL);
+			tmplist = tmplist->next;
+			i = 0;
 		}
-		tmplist->alloted_mem[i] = size;
-		if (tmplist->type == TINY)
-		{
-		// printf("\nassign_block\n[TYPE : {%d}]\n[start_add : {%p}]\n[ALLOTED_MEM [%d] : {%lu}]\n", list->type, tmplist->start_add, i, tmplist->alloted_mem[i]);
-			return (tmplist->start_add + (i * TBLOCK));
-		}
-		else if (tmplist->type == SMALL)
-		{
-		// printf("\nassign_block\n[TYPE : {%d}]\n[start_add : {%p}]\n[ALLOTED_MEM [%d] : {%lu}]\n", list->type, tmplist->start_add, i, tmplist->alloted_mem[i]);
-			return (tmplist->start_add + (i * SBLOCK));
-		}
-		if (largeSpecialCase(tmplist, size) == -1)
-			return (NULL);
-		// printf("\nassign_block\n[TYPE : {%d}]\n[start_add : {%p}]\n[ALLOTED_MEM [%d] : {%lu}]\n",list->type, tmplist->start_add, i, tmplist->alloted_mem[i]);
-		return (tmplist->start_add);
+	}
+	tmplist->alloted_mem[i] = size;
+	if (tmplist->type == TINY)
+		return (tmplist->start_add + (i * TBLOCK));
+	else if (tmplist->type == SMALL)
+		return (tmplist->start_add + (i * SBLOCK));
+	if (large_special_case(tmplist, size) == -1)
+		return (NULL);
+	return (tmplist->start_add);
 }

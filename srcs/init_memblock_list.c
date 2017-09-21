@@ -22,5 +22,4 @@ int		init_memblock_list(t_memblocklist *list, t_blocktype type)
 		return (-1);
 	else
 		return (0);
-
 }

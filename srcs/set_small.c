@@ -18,7 +18,7 @@ int				set_small(t_memblocklist *list)
 
 	i = 0;
 	list->start_add = (void *)mmap(0, SMALLSIZE,
-		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1 , 0);
+		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
 	if (list->start_add == MAP_FAILED)
 		return (-1);
 	list->type = SMALL;

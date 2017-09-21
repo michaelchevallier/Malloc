@@ -52,7 +52,6 @@ static void		*tinyrealloc(t_memblocklist *list, int i, size_t size,
 		free(list->TBLOCKADDR);
 	}
 	return (ptr);
-
 }
 
 static void		*tryrealloc(t_memblocklist *list, int i, size_t size)
@@ -76,15 +75,13 @@ static void		*tryrealloc(t_memblocklist *list, int i, size_t size)
 	{
 		if ((ptr = malloc(size)) == NULL)
 			return (NULL);
-// show_alloc_mem();
 		ft_memcpy(ptr, (const void *)list->start_add, cpysize);
-// printf("############################################# DEBUG : [ %p ] [ %p ]\n", ptr, list->start_add);
 		free(list->start_add);
 	}
 	return (ptr);
 }
 
-static void		*findAddrInList(void *ptr, t_memblocklist *list, size_t size)
+static void		*find_addr_list(void *ptr, t_memblocklist *list, size_t size)
 {
 	t_memblocklist	*tmplist;
 	int				i;
@@ -107,21 +104,19 @@ static void		*findAddrInList(void *ptr, t_memblocklist *list, size_t size)
 			return (tryrealloc(tmplist, 0, size));
 		tmplist = tmplist->next;
 	}
-// printf("############################################### DEBUG pas trouver\n");
 	return ((void *)-1);
 }
 
-void						*realloc(void *ptr, size_t size)
+void			*realloc(void *ptr, size_t size)
 {
 	void		*rptr;
 
 	rptr = (void *)-1;
 	if (ptr == NULL)
-		return (NULL);
-	if((rptr = findAddrInList(ptr, g_fmem->largelist, size)) == (void *)-1)
-		if((rptr = findAddrInList(ptr, g_fmem->smalllist, size)) == (void *)-1)
-			rptr = findAddrInList(ptr, g_fmem->tinylist, size);
-// printf("\nreturned pointer : [%p]", rptr);
+		return (malloc(size));
+	if ((rptr = find_addr_list(ptr, g_fmem->largelist, size)) == (void *)-1)
+		if ((rptr = find_addr_list(ptr, g_fmem->smalllist, size)) == (void *)-1)
+			rptr = find_addr_list(ptr, g_fmem->tinylist, size);
 	if (rptr == (void *)-1)
 		return (NULL);
 	return (rptr);

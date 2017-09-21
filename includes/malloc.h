@@ -17,13 +17,10 @@
 # include <sys/mman.h>
 # include <sys/resource.h>
 # include "../libft/includes/ft_printf.h"
-
-#include <stdio.h>
-
 # define BLOCKDIV 100
 # define PAGESIZE getpagesize()
-# define TINYSIZE (size_t)(10 * PAGESIZE)
-# define SMALLSIZE (size_t)(100 * PAGESIZE)
+# define TINYSIZE (size_t)(25 * PAGESIZE)
+# define SMALLSIZE (size_t)(3200 * PAGESIZE)
 # define TBLOCK ((TINYSIZE) / (100))
 # define SBLOCK ((SMALLSIZE) / (100))
 # define TBLOCKADDR start_add + (i * TBLOCK)
@@ -67,7 +64,6 @@ int							create_new_memblock(t_memblocklist *list,
 int							is_same_ptr(void *ptr1, void *ptr2);
 void						putoabase(uintmax_t n, size_t base);
 size_t						printmeminfo(t_memblocklist *list);
-
 
 extern t_fmemblocks		*g_fmem;
 #endif
