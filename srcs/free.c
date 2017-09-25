@@ -39,21 +39,24 @@ static t_memblocklist	*remove_from_list(t_memblocklist *list,
 
 static void				free_and_destroy(t_memblocklist *list)
 {
-	if (list->type == TINY)
+	if (list)
 	{
-		munmap(list->start_add, TINYSIZE);
-		g_fmem->tinylist = remove_from_list(list, g_fmem->tinylist);
-	}
-	if (list->type == SMALL)
-	{
-		munmap(list->start_add, SMALLSIZE);
-		g_fmem->smalllist = remove_from_list(list, g_fmem->smalllist);
-	}
-	if (list->type == LARGE)
-	{
-		munmap(list->start_add, list->alloted_mem[0]);
-		if (list->next != NULL)
-			g_fmem->largelist = remove_from_list(list, g_fmem->largelist);
+		if (list->type == TINY)
+		{
+			munmap(list->start_add, TINYSIZE);
+			g_fmem->tinylist = remove_from_list(list, g_fmem->tinylist);
+		}
+		else if (list->type == SMALL)
+		{
+			munmap(list->start_add, SMALLSIZE);
+			g_fmem->smalllist = remove_from_list(list, g_fmem->smalllist);
+		}
+		else if (list->type == LARGE)
+		{
+			munmap(list->start_add, list->alloted_mem[0]);
+			if (list->next != NULL)
+				g_fmem->largelist = remove_from_list(list, g_fmem->largelist);
+		}
 	}
 }
 
